@@ -7,7 +7,6 @@ import java.sql.Statement;
 import javax.sql.DataSource;
 
 import webservice.database.ConnectionUtils;
-import webservice.database.model.Person;
 
 public class DeleteService {
 
@@ -21,10 +20,10 @@ public class DeleteService {
 		this.connection = dataSource.getConnection(); 
 	}
 	
-	public boolean createPerson(Person person) {
+	public boolean deletePerson(int id) {
 		try {	
 			String query = String.format("delete from person where person.id = %d ;", 
-					person.getId());
+					id);
 			Statement statement = connection.createStatement();
 
 			statement.executeUpdate(query);
@@ -32,6 +31,7 @@ public class DeleteService {
 			return true;
 		}
 		catch (SQLException ex) {
+			System.out.println(ex);
 			//log.error("Error during deleting data from database!", ex);
 			return false;
 		}

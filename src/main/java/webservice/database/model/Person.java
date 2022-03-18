@@ -2,8 +2,10 @@ package webservice.database.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class Person {
 	
@@ -12,5 +14,12 @@ public class Person {
 	String surname;
 	String patronymic;
 	int age;
+	
+	public Person(String name, String surname, String patronymic, int age) {
+		this.name = name;
+		this.surname = surname;
+		this.patronymic=patronymic;
+		this.age = age;
+	}
 
 }

@@ -21,7 +21,7 @@ public class UpdateService {
 		this.connection = dataSource.getConnection(); 
 	}
 	
-	public boolean createPerson(Person person) {
+	public boolean updatePerson(Person person) {
 		try {	
 			String query = String.format("update person set name='%s', surname='%s', patronymic='%s', age=%d "
 					+ "where id = %d;", 
@@ -33,6 +33,7 @@ public class UpdateService {
 			return true;
 		}
 		catch (SQLException ex) {
+			System.out.println(ex);
 			//log.error("Error during updating data in database!", ex);
 			return false;
 		}

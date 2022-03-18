@@ -15,6 +15,8 @@ public class ConnectionUtils {
 		try {
 			connection = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
 		} catch (SQLException ex) {
+			System.out.println("Exception!");
+			System.out.println(ex);
 			// log.error("No database connection!");
 		}
 		return connection;

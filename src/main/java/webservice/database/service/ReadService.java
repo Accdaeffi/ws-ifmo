@@ -123,6 +123,7 @@ public class ReadService {
 			result = getAllPersonsFromResultSet(statement.getResultSet());
 		}
 		catch (SQLException ex) {
+			System.out.println(ex);
 			//log.error("Error during extracting persons from database!");
 		}
 		

@@ -1,6 +1,7 @@
 package webservice.database.service;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -21,20 +22,33 @@ public class CreateService {
 		this.connection = dataSource.getConnection(); 
 	}
 	
-	public boolean createPerson(Person person) {
+	public Person createPerson(Person person) {
 		try {	
 			String query = String.format("insert into person (name, surname, patronymic, age) "
 					+ "values ('%s', '%s', '%s', %d);", 
 					person.getName(), person.getSurname(), person.getPatronymic(), person.getAge());
 			Statement statement = connection.createStatement();
 
-			statement.executeUpdate(query);
+			statement.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
 			
-			return true;
+			try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+				
+	            if (generatedKeys.next()) {
+	            	person.setId((int) generatedKeys.getLong(1));
+	            }
+	            else {
+	                throw new SQLException("Creating user failed, no ID obtained.");
+	            }
+	        }
+			
+			System.out.println("Created person with id " + person.getId());
+			
+			return person;
 		}
 		catch (SQLException ex) {
+			System.out.println(ex);
 			//log.error("Error during inserting data to database!", ex);
-			return false;
+			return null;
 		}
 		
 	}
