@@ -22,7 +22,7 @@ public class PersonCreateService_ServiceLocator extends org.apache.axis.client.S
     }
 
     // Use to get a proxy class for PersonCreateServicePort
-    private java.lang.String PersonCreateServicePort_address = "http://localhost:8080/PersonCreateService";
+    private java.lang.String PersonCreateServicePort_address = "http://127.0.0.1:8080/PersonCreateService";
 
     public java.lang.String getPersonCreateServicePortAddress() {
         return PersonCreateServicePort_address;

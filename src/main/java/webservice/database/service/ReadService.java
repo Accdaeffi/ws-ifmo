@@ -24,10 +24,11 @@ public class ReadService {
 		this.connection = dataSource.getConnection(); 
 	}
 	
-	public Optional<Person> getById(int id) {
+	public Optional<Person> getById(int id) 
+			throws SQLException {
 		Person result = null;
 		
-		String query = String.format("select * from person where id = %d;", id);
+		String query = String.format("select * from person where id = %d", id);
 		ArrayList<Person> resultArray = executeQuery(query);
 		
 		if (resultArray.size()>0) {
@@ -37,48 +38,54 @@ public class ReadService {
 		return Optional.ofNullable(result);
 	}
 	
-	public ArrayList<Person> getAllPersons() {
-		String query = String.format("select * from person;");
+	public ArrayList<Person> getAllPersons() 
+			throws SQLException {
+		String query = String.format("select * from person");
 		
 		ArrayList<Person> result = executeQuery(query);
 
 		return result;
 	}
 	
-	public ArrayList<Person> getByName(String name) {
-		String query = String.format("select * from person where name = '%s';", name);
+	public ArrayList<Person> getByName(String name) 
+			throws SQLException {
+		String query = String.format("select * from person where name = '%s'", name);
 		
 		ArrayList<Person> result = executeQuery(query);
 
 		return result;
 	}
 	
-	public ArrayList<Person> getBySurname(String surname) {
-		String query = String.format("select * from person where surname = '%s';", surname);
+	public ArrayList<Person> getBySurname(String surname) 
+			throws SQLException {
+		String query = String.format("select * from person where surname = '%s'", surname);
 		
 		ArrayList<Person> result = executeQuery(query);
 
 		return result;
 	}
 	
-	public ArrayList<Person> getByPatronymic(String patronymic) {
-		String query = String.format("select * from person where patronymic = '%s';", patronymic);
+	public ArrayList<Person> getByPatronymic(String patronymic) 
+			throws SQLException {
+		String query = String.format("select * from person where patronymic = '%s'", patronymic);
 		
 		ArrayList<Person> result = executeQuery(query);
 
 		return result;
 	}
 	
-	public ArrayList<Person> getByAge(int age) {
-		String query = String.format("select * from person where age = %d;", age);
+	public ArrayList<Person> getByAge(int age) 
+			throws SQLException {
+		String query = String.format("select * from person where age = %d", age);
 		
 		ArrayList<Person> result = executeQuery(query);
 
 		return result;
 	}
 	
-	public ArrayList<Person> getByNameAndSurname(String name, String surname) {
-		String query = String.format("select * from person where name = '%s' and surname = '%s';", 
+	public ArrayList<Person> getByNameAndSurname(String name, String surname) 
+			throws SQLException {
+		String query = String.format("select * from person where name = '%s' and surname = '%s'", 
 				name, surname);
 		
 		ArrayList<Person> result = executeQuery(query);
@@ -86,8 +93,9 @@ public class ReadService {
 		return result;
 	}
 	
-	public ArrayList<Person> getByFullName(String name, String surname, String patronymic) {
-		String query = String.format("select * from person where name = '%s' and surname = '%s' and patronymic = '%s';",
+	public ArrayList<Person> getByFullName(String name, String surname, String patronymic) 
+			throws SQLException {
+		String query = String.format("select * from person where name = '%s' and surname = '%s' and patronymic = '%s'",
 				name, surname, patronymic);
 		
 		ArrayList<Person> result = executeQuery(query);
@@ -95,16 +103,16 @@ public class ReadService {
 		return result;
 	}
 	
-	public ArrayList<Person> getYoungerThan(int age) {
-		String query = String.format("select * from person where age < %d;", age);
+	public ArrayList<Person> getYoungerThan(int age) throws SQLException {
+		String query = String.format("select * from person where age < %d", age);
 		
 		ArrayList<Person> result = executeQuery(query);
 
 		return result;
 	}
 	
-	public ArrayList<Person> getOlderThan(int age) {
-		String query = String.format("select * from person where age > %d;", age);
+	public ArrayList<Person> getOlderThan(int age) throws SQLException {
+		String query = String.format("select * from person where age > %d", age);
 		
 		ArrayList<Person> result = executeQuery(query);
 
@@ -112,20 +120,20 @@ public class ReadService {
 	}
 	
 	
-	private ArrayList<Person> executeQuery(String query) {
+	private ArrayList<Person> executeQuery(String query) 
+			throws SQLException {
+		
+		if (query.contains(";")) {
+			throw new SQLException("SQL Injection detected!");
+		}
+		
 		ArrayList<Person> result = new ArrayList<>();
 		
-		try {	
-			PreparedStatement statement = connection.prepareStatement(query);
+		PreparedStatement statement = connection.prepareStatement(query);
 
-			statement.execute();
+		statement.execute();
 			
-			result = getAllPersonsFromResultSet(statement.getResultSet());
-		}
-		catch (SQLException ex) {
-			System.out.println(ex);
-			//log.error("Error during extracting persons from database!");
-		}
+		result = getAllPersonsFromResultSet(statement.getResultSet());
 		
 		return result;
 	}

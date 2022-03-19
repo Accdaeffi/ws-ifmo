@@ -8,5 +8,5 @@
 package client.service.delete;
 
 public interface PersonDeleteService_PortType extends java.rmi.Remote {
-    public boolean deletePerson(int arg0) throws java.rmi.RemoteException;
+    public boolean deletePerson(int arg0) throws java.rmi.RemoteException, client.model.faults.IncorrectArgumentFault, client.model.faults.WorkWithSQLFault;
 }

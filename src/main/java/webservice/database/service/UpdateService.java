@@ -21,23 +21,21 @@ public class UpdateService {
 		this.connection = dataSource.getConnection(); 
 	}
 	
-	public boolean updatePerson(Person person) {
-		try {	
-			String query = String.format("update person set name='%s', surname='%s', patronymic='%s', age=%d "
-					+ "where id = %d;", 
-					person.getName(), person.getSurname(), person.getPatronymic(), person.getAge(), person.getId());
-			Statement statement = connection.createStatement();
-
-			statement.executeUpdate(query);
-			
-			return true;
-		}
-		catch (SQLException ex) {
-			System.out.println(ex);
-			//log.error("Error during updating data in database!", ex);
-			return false;
+	public boolean updatePerson(Person person) 
+			throws SQLException {
+		String query = String.format("update person set name='%s', surname='%s', patronymic='%s', age=%d "
+				+ "where id = %d", 
+				person.getName(), person.getSurname(), person.getPatronymic(), person.getAge(), person.getId());
+		
+		if (query.contains(";")) {
+			throw new SQLException("SQL Injection detected!");
 		}
 		
+		Statement statement = connection.createStatement();
+
+		statement.executeUpdate(query);
+			
+		return true;	
 	}
 	
 	@Override

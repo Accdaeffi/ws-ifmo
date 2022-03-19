@@ -4,6 +4,9 @@ import java.rmi.RemoteException;
 
 import client.logic.commands.AbsCommand;
 import client.model.Person;
+import client.model.faults.EmptyArgumentFault;
+import client.model.faults.IncorrectArgumentFault;
+import client.model.faults.WorkWithSQLFault;
 import client.service.read.PersonReadServiceProxy;
 
 public class GetAllCommand extends AbsCommand {
@@ -16,7 +19,7 @@ public class GetAllCommand extends AbsCommand {
 		try {
 			Person[] persons = readProxy.getAllPersons();
 			
-			if (persons.length > 0) {
+			if (persons != null) {
 				for (Person p : persons) {
 					sb.append(p.toString());
 					sb.append("\n");
@@ -25,7 +28,12 @@ public class GetAllCommand extends AbsCommand {
 				sb.append("Не найдено!");
 			}
 			
-		} catch (RemoteException e) {
+		} 
+		catch (WorkWithSQLFault e) {
+			sb.append("Ошибка при работе с SQL! ");
+			sb.append(e.getFaultString());
+		}
+		catch (RemoteException e) {
 			e.printStackTrace();
 			sb.append("Ошибка соединения!");
 		}

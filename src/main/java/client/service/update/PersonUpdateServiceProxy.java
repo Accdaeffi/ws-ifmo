@@ -44,7 +44,7 @@ public class PersonUpdateServiceProxy implements client.service.update.PersonUpd
     return personUpdateService_PortType;
   }
   
-  public boolean updatePerson(client.model.Person arg0) throws java.rmi.RemoteException{
+  public boolean updatePerson(client.model.Person arg0) throws java.rmi.RemoteException, client.model.faults.IncorrectArgumentFault, client.model.faults.WorkWithSQLFault, client.model.faults.EmptyArgumentFault{
     if (personUpdateService_PortType == null)
       _initPersonUpdateServiceProxy();
     return personUpdateService_PortType.updatePerson(arg0);

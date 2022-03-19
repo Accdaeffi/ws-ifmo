@@ -7,6 +7,9 @@ import webservice.services.soap.*;
 public class Main {
 
 	public static void main(String[] args) {
+		System.setProperty("com.sun.xml.ws.fault.SOAPFaultBuilder.disableCaptureStackTrace", 
+				"false");
+
 		String readServiceUrl = "http://127.0.0.1:8080/PersonReadService";
 		Endpoint.publish(readServiceUrl, new PersonReadService());
 		

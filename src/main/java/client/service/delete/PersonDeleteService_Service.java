@@ -8,11 +8,9 @@
 package client.service.delete;
 
 public interface PersonDeleteService_Service extends javax.xml.rpc.Service {
-	public java.lang.String getPersonDeleteServicePortAddress();
+    public java.lang.String getPersonDeleteServicePortAddress();
 
-	public client.service.delete.PersonDeleteService_PortType getPersonDeleteServicePort()
-			throws javax.xml.rpc.ServiceException;
+    public client.service.delete.PersonDeleteService_PortType getPersonDeleteServicePort() throws javax.xml.rpc.ServiceException;
 
-	public client.service.delete.PersonDeleteService_PortType getPersonDeleteServicePort(java.net.URL portAddress)
-			throws javax.xml.rpc.ServiceException;
+    public client.service.delete.PersonDeleteService_PortType getPersonDeleteServicePort(java.net.URL portAddress) throws javax.xml.rpc.ServiceException;
 }

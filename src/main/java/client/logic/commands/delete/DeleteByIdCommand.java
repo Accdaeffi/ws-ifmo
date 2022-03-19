@@ -4,6 +4,8 @@ import java.rmi.RemoteException;
 
 import client.logic.commands.AbsCommand;
 import client.logic.exceptions.IncorrectNumberOfArgumentsException;
+import client.model.faults.IncorrectArgumentFault;
+import client.model.faults.WorkWithSQLFault;
 import client.service.delete.PersonDeleteServiceProxy;
 
 public class DeleteByIdCommand extends AbsCommand {
@@ -32,7 +34,15 @@ public class DeleteByIdCommand extends AbsCommand {
 			} else {
 				sb.append("Ошибка удаления!");
 			}
-		} catch (RemoteException e) {
+		} 
+		catch (IncorrectArgumentFault e) {
+			sb.append(e.getFaultString());
+		}
+		catch (WorkWithSQLFault e) {
+			sb.append("Ошибка при работе с SQL! ");
+			sb.append(e.getFaultString());
+		}
+		catch (RemoteException e) {
 			e.printStackTrace();
 			sb.append("Ошибка соединения!");
 		}

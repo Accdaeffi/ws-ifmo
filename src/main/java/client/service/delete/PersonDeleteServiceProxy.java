@@ -44,7 +44,7 @@ public class PersonDeleteServiceProxy implements client.service.delete.PersonDel
     return personDeleteService_PortType;
   }
   
-  public boolean deletePerson(int arg0) throws java.rmi.RemoteException{
+  public boolean deletePerson(int arg0) throws java.rmi.RemoteException, client.model.faults.IncorrectArgumentFault, client.model.faults.WorkWithSQLFault{
     if (personDeleteService_PortType == null)
       _initPersonDeleteServiceProxy();
     return personDeleteService_PortType.deletePerson(arg0);

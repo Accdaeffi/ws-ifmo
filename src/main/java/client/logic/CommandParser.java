@@ -10,16 +10,11 @@ import client.logic.commands.read.*;
 import client.logic.commands.update.*;
 import client.logic.exceptions.*;
 
-import client.model.Person;
-
 public class CommandParser {
 
 	private static CommandParser instance;
 	
-	ArrayList<Person> database;
-	
 	private CommandParser() {
-		database = new ArrayList<Person>();
 	}
 	
 	public static CommandParser getParser() {

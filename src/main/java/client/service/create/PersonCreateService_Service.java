@@ -10,7 +10,7 @@ package client.service.create;
 public interface PersonCreateService_Service extends javax.xml.rpc.Service {
     public java.lang.String getPersonCreateServicePortAddress();
 
-    public PersonCreateService_PortType getPersonCreateServicePort() throws javax.xml.rpc.ServiceException;
+    public client.service.create.PersonCreateService_PortType getPersonCreateServicePort() throws javax.xml.rpc.ServiceException;
 
-    public PersonCreateService_PortType getPersonCreateServicePort(java.net.URL portAddress) throws javax.xml.rpc.ServiceException;
+    public client.service.create.PersonCreateService_PortType getPersonCreateServicePort(java.net.URL portAddress) throws javax.xml.rpc.ServiceException;
 }

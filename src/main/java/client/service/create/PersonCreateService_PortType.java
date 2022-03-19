@@ -7,8 +7,6 @@
 
 package client.service.create;
 
-import client.model.Person;
-
 public interface PersonCreateService_PortType extends java.rmi.Remote {
-    public client.model.Person createPerson(java.lang.String arg0, java.lang.String arg1, java.lang.String arg2, int arg3) throws java.rmi.RemoteException;
+    public client.model.Person createPerson(java.lang.String arg0, java.lang.String arg1, java.lang.String arg2, int arg3) throws java.rmi.RemoteException, client.model.faults.IncorrectArgumentFault, client.model.faults.WorkWithSQLFault, client.model.faults.EmptyArgumentFault;
 }

@@ -20,22 +20,14 @@ public class DeleteService {
 		this.connection = dataSource.getConnection(); 
 	}
 	
-	public boolean deletePerson(int id) {
-		try {	
-			String query = String.format("delete from person where person.id = %d ;", 
-					id);
-			Statement statement = connection.createStatement();
+	public boolean deletePerson(int id) throws SQLException {	
+		String query = String.format("delete from person where person.id = %d", 
+				id);
+		Statement statement = connection.createStatement();
 
-			statement.executeUpdate(query);
+		statement.executeUpdate(query);
 			
-			return true;
-		}
-		catch (SQLException ex) {
-			System.out.println(ex);
-			//log.error("Error during deleting data from database!", ex);
-			return false;
-		}
-		
+		return true;
 	}
 	
 	@Override

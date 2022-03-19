@@ -5,6 +5,9 @@ import java.rmi.RemoteException;
 import client.logic.commands.AbsCommand;
 import client.logic.exceptions.IncorrectNumberOfArgumentsException;
 import client.model.Person;
+import client.model.faults.EmptyArgumentFault;
+import client.model.faults.IncorrectArgumentFault;
+import client.model.faults.WorkWithSQLFault;
 import client.service.read.PersonReadServiceProxy;
 
 public class GetByNameAndSurnameCommand extends AbsCommand {
@@ -31,7 +34,7 @@ public class GetByNameAndSurnameCommand extends AbsCommand {
 		try {
 			Person[] persons = readProxy.getPersonsByNameAndSurname(name, surname);
 			
-			if (persons.length > 0) {
+			if (persons != null) {
 				for (Person p : persons) {
 					sb.append(p.toString());
 					sb.append("\n");
@@ -40,7 +43,15 @@ public class GetByNameAndSurnameCommand extends AbsCommand {
 				sb.append("Не найдено!");
 			}
 			
-		} catch (RemoteException e) {
+		} 
+		catch (EmptyArgumentFault e) {
+			sb.append(e.getFaultString());
+		}
+		catch (WorkWithSQLFault e) {
+			sb.append("Ошибка при работе с SQL! ");
+			sb.append(e.getFaultString());
+		}
+		catch (RemoteException e) {
 			e.printStackTrace();
 			sb.append("Ошибка соединения!");
 		}

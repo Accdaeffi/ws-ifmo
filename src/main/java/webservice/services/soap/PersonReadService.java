@@ -1,5 +1,6 @@
 package webservice.services.soap;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,83 +9,223 @@ import javax.jws.WebMethod;
 
 import webservice.database.model.Person;
 import webservice.database.service.ReadService;
+import webservice.exceptions.EmptyArgumentException;
+import webservice.exceptions.IncorrectArgumentException;
+import webservice.exceptions.PersonWithSuchIdNotFoundException;
+import webservice.exceptions.WorkWithSQLException;
+import webservice.exceptions.faults.EmptyArgumentFault;
+import webservice.exceptions.faults.IncorrectArgumentFault;
+import webservice.exceptions.faults.PersonWithSuchIdNotFoundFault;
+import webservice.exceptions.faults.WorkWithSQLFault;
 
 @WebService(serviceName = "PersonReadService")
 public class PersonReadService {
 
 	 @WebMethod(operationName = "getAllPersons")
-	 public List<Person> getAllPersons() {
+	 public List<Person> getAllPersons() 
+			 throws WorkWithSQLException {
+		 
 		 ReadService service = new ReadService();
-		 return service.getAllPersons();
+		 try {
+			return service.getAllPersons();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			WorkWithSQLFault fault = new WorkWithSQLFault();
+			throw new WorkWithSQLException(e.getMessage(), fault, e);
+		}
 	 }
 	 
 	 @WebMethod(operationName = "getPersonById")
-	 public Person getPersonById(int id) {
+	 public Person getPersonById(int id) 
+			 throws WorkWithSQLException, PersonWithSuchIdNotFoundException {
 		 ReadService service = new ReadService();
 		 
-		 Optional<Person> optionalPerson = service.getById(id);
+		 Optional<Person> optionalPerson;
+		 try {
+			 optionalPerson = service.getById(id);
+
 		 
 		 if (optionalPerson.isPresent()) {
 			 return optionalPerson.get();
 		 } else {
-			 return null;
+			 PersonWithSuchIdNotFoundFault fault = new PersonWithSuchIdNotFoundFault(id);
+			 throw new PersonWithSuchIdNotFoundException(fault);
 		 }
+		 } catch (SQLException e) {
+			 e.printStackTrace();
+			 WorkWithSQLFault fault = new WorkWithSQLFault();
+			 throw new WorkWithSQLException(e.getMessage(), fault, e);
+		 }
+		 
 	 }
 	 
 	 @WebMethod(operationName = "getPersonsByName")
-	 public List<Person> getPersonsByName(String name) {
+	 public List<Person> getPersonsByName(String name) 
+			 throws WorkWithSQLException, EmptyArgumentException {
 		 ReadService service = new ReadService();
 		 
-		 return service.getByName(name);
+		 if (name == null || name.equals("")) {
+			 EmptyArgumentFault fault = new EmptyArgumentFault("name");
+			 throw new EmptyArgumentException(fault);
+		 }
+		 
+		 try {
+			return service.getByName(name);
+		 } catch (SQLException e) {
+			e.printStackTrace();
+			WorkWithSQLFault fault = new WorkWithSQLFault();
+			throw new WorkWithSQLException(e.getMessage(), fault, e);
+		 }
 	 }
 	 
 	 @WebMethod(operationName = "getPersonsBySurname")
-	 public List<Person> getPersonsBySurname(String surname) {
+	 public List<Person> getPersonsBySurname(String surname) 
+			 throws WorkWithSQLException, EmptyArgumentException {
 		 ReadService service = new ReadService();
 		 
-		 return service.getBySurname(surname);
+		 if (surname == null || surname.equals("")) {
+			 EmptyArgumentFault fault = new EmptyArgumentFault("surname");
+			 throw new EmptyArgumentException(fault);
+		 }
+		 
+		 try {
+			return service.getBySurname(surname);
+		 } catch (SQLException e) {
+			e.printStackTrace();
+			WorkWithSQLFault fault = new WorkWithSQLFault();
+			throw new WorkWithSQLException(e.getMessage(), fault, e);
+		 }
 	 }
 	 
 	 @WebMethod(operationName = "getPersonsByPatronymic")
-	 public List<Person> getPersonsByPatronymic(String patronymic) {
+	 public List<Person> getPersonsByPatronymic(String patronymic) 
+			 throws WorkWithSQLException, EmptyArgumentException {
 		 ReadService service = new ReadService();
 		 
-		 return service.getByPatronymic(patronymic);
+		 if (patronymic == null || patronymic.equals("")) {
+			 EmptyArgumentFault fault = new EmptyArgumentFault("patronymic");
+			 throw new EmptyArgumentException(fault);
+		 }
+		 
+		 try {
+			return service.getByPatronymic(patronymic);
+		 } catch (SQLException e) {
+			e.printStackTrace();
+			WorkWithSQLFault fault = new WorkWithSQLFault();
+			throw new WorkWithSQLException(e.getMessage(), fault, e);
+		 }
 	 }
 	 
 	 @WebMethod(operationName = "getPersonsByAge")
-	 public List<Person> getPersonsByAge(int age) {
+	 public List<Person> getPersonsByAge(int age) 
+			 throws WorkWithSQLException, IncorrectArgumentException {
+		 if (age < 0) {
+			 IncorrectArgumentFault fault = new IncorrectArgumentFault("age");
+			 throw new IncorrectArgumentException(fault);
+		 }
+		 
 		 ReadService service = new ReadService();
 		 
-		 return service.getByAge(age);
+		 try {
+			return service.getByAge(age);
+		 } catch (SQLException e) {
+			e.printStackTrace();
+			WorkWithSQLFault fault = new WorkWithSQLFault();
+			throw new WorkWithSQLException(e.getMessage(), fault, e);
+		 }
 	 }
 	 
 	 @WebMethod(operationName = "getPersonsByNameAndSurname")
-	 public List<Person> getPersonsByNameAndSurname(String name, String surname){
+	 public List<Person> getPersonsByNameAndSurname(String name, String surname) 
+			 throws WorkWithSQLException, EmptyArgumentException{
 		 ReadService service = new ReadService();
 		 
-		 return service.getByNameAndSurname(name, surname);
+		 if (name == null || name.equals("")) {
+			 EmptyArgumentFault fault = new EmptyArgumentFault("name");
+			 throw new EmptyArgumentException(fault);
+		 }
+		 
+		 if (surname == null || surname.equals("")) {
+			 EmptyArgumentFault fault = new EmptyArgumentFault("surname");
+			 throw new EmptyArgumentException(fault);
+		 }
+		 
+		 try {
+			return service.getByNameAndSurname(name, surname);
+		 } catch (SQLException e) {
+			e.printStackTrace();
+			WorkWithSQLFault fault = new WorkWithSQLFault();
+			throw new WorkWithSQLException(e.getMessage(), fault, e);
+		 }
 	 }
 	 
 	 @WebMethod(operationName = "getPersonsByFullName")
-	 public List<Person> getPersonsByFullName(String name, String surname, String patronymic){
+	 public List<Person> getPersonsByFullName(String name, String surname, String patronymic) 
+			 throws WorkWithSQLException, EmptyArgumentException{
 		 ReadService service = new ReadService();
 		 
-		 return service.getByFullName(name, surname, patronymic);
+		 if (name == null || name.equals("")) {
+			 EmptyArgumentFault fault = new EmptyArgumentFault("name");
+			 throw new EmptyArgumentException(fault);
+		 }
+		 
+		 if (surname == null || surname.equals("")) {
+			 EmptyArgumentFault fault = new EmptyArgumentFault("surname");
+			 throw new EmptyArgumentException(fault);
+		 }
+		 
+		 if (patronymic == null || patronymic.equals("")) {
+			 EmptyArgumentFault fault = new EmptyArgumentFault("patronymic");
+			 throw new EmptyArgumentException(fault);
+		 }
+		 
+		 try {
+			return service.getByFullName(name, surname, patronymic);
+		 } catch (SQLException e) {
+			e.printStackTrace();
+			WorkWithSQLFault fault = new WorkWithSQLFault();
+			throw new WorkWithSQLException(e.getMessage(), fault, e);
+		 }
 	 }
 	 
 	 @WebMethod(operationName = "getPersonsYoungerThan")
-	 public List<Person> getPersonsYoungerThan(int age) {
+	 public List<Person> getPersonsYoungerThan(int age) 
+			 throws WorkWithSQLException, IncorrectArgumentException {
+		 
+		 if (age < 0) {
+			 IncorrectArgumentFault fault = new IncorrectArgumentFault("age");
+			 throw new IncorrectArgumentException(fault);
+		 }
+		 
 		 ReadService service = new ReadService();
 		 
-		 return service.getYoungerThan(age);
+		 try {
+			return service.getYoungerThan(age);
+		 } catch (SQLException e) {
+			e.printStackTrace();
+			WorkWithSQLFault fault = new WorkWithSQLFault();
+			throw new WorkWithSQLException(e.getMessage(), fault, e);
+		 }
 	 }
 	 
 	 @WebMethod(operationName = "getPersonsOlderThan")
-	 public List<Person> getPersonsOlderThan(int age) {
+	 public List<Person> getPersonsOlderThan(int age) 
+			 throws WorkWithSQLException, IncorrectArgumentException {
+		 
+		 if (age < 0) {
+			 IncorrectArgumentFault fault = new IncorrectArgumentFault("age");
+			 throw new IncorrectArgumentException(fault);
+		 }
+		 
 		 ReadService service = new ReadService();
 		 
-		 return service.getOlderThan(age);
+		 try {
+			return service.getOlderThan(age);
+		 } catch (SQLException e) {
+			e.printStackTrace();
+			WorkWithSQLFault fault = new WorkWithSQLFault();
+			throw new WorkWithSQLException(e.getMessage(), fault, e);
+		 }
 	 }
 	 
 }

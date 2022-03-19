@@ -7,8 +7,6 @@
 
 package client.service.create;
 
-import client.model.Person;
-
 public class PersonCreateServicePortBindingStub extends org.apache.axis.client.Stub implements client.service.create.PersonCreateService_PortType {
     private java.util.Vector cachedSerClasses = new java.util.Vector();
     private java.util.Vector cachedSerQNames = new java.util.Vector();
@@ -43,6 +41,24 @@ public class PersonCreateServicePortBindingStub extends org.apache.axis.client.S
         oper.setReturnQName(new javax.xml.namespace.QName("", "return"));
         oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
         oper.setUse(org.apache.axis.constants.Use.LITERAL);
+        oper.addFault(new org.apache.axis.description.FaultDesc(
+                      new javax.xml.namespace.QName("http://soap.services.webservice/", "IncorrectArgumentException"),
+                      "client.model.faults.IncorrectArgumentFault",
+                      new javax.xml.namespace.QName("http://soap.services.webservice/", "incorrectArgumentFault"), 
+                      true
+                     ));
+        oper.addFault(new org.apache.axis.description.FaultDesc(
+                      new javax.xml.namespace.QName("http://soap.services.webservice/", "WorkWithSQLException"),
+                      "client.model.faults.WorkWithSQLFault",
+                      new javax.xml.namespace.QName("http://soap.services.webservice/", "workWithSQLFault"), 
+                      true
+                     ));
+        oper.addFault(new org.apache.axis.description.FaultDesc(
+                      new javax.xml.namespace.QName("http://soap.services.webservice/", "EmptyArgumentException"),
+                      "client.model.faults.EmptyArgumentFault",
+                      new javax.xml.namespace.QName("http://soap.services.webservice/", "emptyArgumentFault"), 
+                      true
+                     ));
         _operations[0] = oper;
 
     }
@@ -76,9 +92,30 @@ public class PersonCreateServicePortBindingStub extends org.apache.axis.client.S
             java.lang.Class simpledf = org.apache.axis.encoding.ser.SimpleDeserializerFactory.class;
             java.lang.Class simplelistsf = org.apache.axis.encoding.ser.SimpleListSerializerFactory.class;
             java.lang.Class simplelistdf = org.apache.axis.encoding.ser.SimpleListDeserializerFactory.class;
+            qName = new javax.xml.namespace.QName("http://soap.services.webservice/", "emptyArgumentFault");
+            cachedSerQNames.add(qName);
+            cls = client.model.faults.EmptyArgumentFault.class;
+            cachedSerClasses.add(cls);
+            cachedSerFactories.add(beansf);
+            cachedDeserFactories.add(beandf);
+
+            qName = new javax.xml.namespace.QName("http://soap.services.webservice/", "incorrectArgumentFault");
+            cachedSerQNames.add(qName);
+            cls = client.model.faults.IncorrectArgumentFault.class;
+            cachedSerClasses.add(cls);
+            cachedSerFactories.add(beansf);
+            cachedDeserFactories.add(beandf);
+
             qName = new javax.xml.namespace.QName("http://soap.services.webservice/", "person");
             cachedSerQNames.add(qName);
             cls = client.model.Person.class;
+            cachedSerClasses.add(cls);
+            cachedSerFactories.add(beansf);
+            cachedDeserFactories.add(beandf);
+
+            qName = new javax.xml.namespace.QName("http://soap.services.webservice/", "workWithSQLFault");
+            cachedSerQNames.add(qName);
+            cls = client.model.faults.WorkWithSQLFault.class;
             cachedSerClasses.add(cls);
             cachedSerFactories.add(beansf);
             cachedDeserFactories.add(beandf);
@@ -149,7 +186,7 @@ public class PersonCreateServicePortBindingStub extends org.apache.axis.client.S
         }
     }
 
-    public client.model.Person createPerson(java.lang.String arg0, java.lang.String arg1, java.lang.String arg2, int arg3) throws java.rmi.RemoteException {
+    public client.model.Person createPerson(java.lang.String arg0, java.lang.String arg1, java.lang.String arg2, int arg3) throws java.rmi.RemoteException, client.model.faults.IncorrectArgumentFault, client.model.faults.WorkWithSQLFault, client.model.faults.EmptyArgumentFault {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -179,6 +216,20 @@ public class PersonCreateServicePortBindingStub extends org.apache.axis.client.S
             }
         }
   } catch (org.apache.axis.AxisFault axisFaultException) {
+    if (axisFaultException.detail != null) {
+        if (axisFaultException.detail instanceof java.rmi.RemoteException) {
+              throw (java.rmi.RemoteException) axisFaultException.detail;
+         }
+        if (axisFaultException.detail instanceof client.model.faults.IncorrectArgumentFault) {
+              throw (client.model.faults.IncorrectArgumentFault) axisFaultException.detail;
+         }
+        if (axisFaultException.detail instanceof client.model.faults.WorkWithSQLFault) {
+              throw (client.model.faults.WorkWithSQLFault) axisFaultException.detail;
+         }
+        if (axisFaultException.detail instanceof client.model.faults.EmptyArgumentFault) {
+              throw (client.model.faults.EmptyArgumentFault) axisFaultException.detail;
+         }
+   }
   throw axisFaultException;
 }
     }

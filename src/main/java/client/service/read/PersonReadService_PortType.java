@@ -7,17 +7,15 @@
 
 package client.service.read;
 
-import client.model.Person;
-
 public interface PersonReadService_PortType extends java.rmi.Remote {
-    public client.model.Person[] getPersonsByName(java.lang.String arg0) throws java.rmi.RemoteException;
-    public client.model.Person[] getAllPersons() throws java.rmi.RemoteException;
-    public client.model.Person getPersonById(int arg0) throws java.rmi.RemoteException;
-    public client.model.Person[] getPersonsByAge(int arg0) throws java.rmi.RemoteException;
-    public client.model.Person[] getPersonsBySurname(java.lang.String arg0) throws java.rmi.RemoteException;
-    public client.model.Person[] getPersonsByPatronymic(java.lang.String arg0) throws java.rmi.RemoteException;
-    public client.model.Person[] getPersonsByFullName(java.lang.String arg0, java.lang.String arg1, java.lang.String arg2) throws java.rmi.RemoteException;
-    public client.model.Person[] getPersonsOlderThan(int arg0) throws java.rmi.RemoteException;
-    public client.model.Person[] getPersonsByNameAndSurname(java.lang.String arg0, java.lang.String arg1) throws java.rmi.RemoteException;
-    public client.model.Person[] getPersonsYoungerThan(int arg0) throws java.rmi.RemoteException;
+    public client.model.Person getPersonById(int arg0) throws java.rmi.RemoteException, client.model.faults.WorkWithSQLFault, client.model.faults.PersonWithSuchIdNotFoundFault;
+    public client.model.Person[] getPersonsByAge(int arg0) throws java.rmi.RemoteException, client.model.faults.IncorrectArgumentFault, client.model.faults.WorkWithSQLFault;
+    public client.model.Person[] getPersonsByName(java.lang.String arg0) throws java.rmi.RemoteException, client.model.faults.WorkWithSQLFault, client.model.faults.EmptyArgumentFault;
+    public client.model.Person[] getAllPersons() throws java.rmi.RemoteException, client.model.faults.WorkWithSQLFault;
+    public client.model.Person[] getPersonsYoungerThan(int arg0) throws java.rmi.RemoteException, client.model.faults.IncorrectArgumentFault, client.model.faults.WorkWithSQLFault;
+    public client.model.Person[] getPersonsByNameAndSurname(java.lang.String arg0, java.lang.String arg1) throws java.rmi.RemoteException, client.model.faults.WorkWithSQLFault, client.model.faults.EmptyArgumentFault;
+    public client.model.Person[] getPersonsByPatronymic(java.lang.String arg0) throws java.rmi.RemoteException, client.model.faults.WorkWithSQLFault, client.model.faults.EmptyArgumentFault;
+    public client.model.Person[] getPersonsByFullName(java.lang.String arg0, java.lang.String arg1, java.lang.String arg2) throws java.rmi.RemoteException, client.model.faults.WorkWithSQLFault, client.model.faults.EmptyArgumentFault;
+    public client.model.Person[] getPersonsOlderThan(int arg0) throws java.rmi.RemoteException, client.model.faults.IncorrectArgumentFault, client.model.faults.WorkWithSQLFault;
+    public client.model.Person[] getPersonsBySurname(java.lang.String arg0) throws java.rmi.RemoteException, client.model.faults.WorkWithSQLFault, client.model.faults.EmptyArgumentFault;
 }
