@@ -1,17 +1,32 @@
 package client;
 
-import java.rmi.RemoteException;
+import java.util.Scanner;
 
-import client.service.create.PersonCreateServiceProxy;
-import client.service.delete.PersonDeleteServiceProxy;
-import client.model.Person;
-import client.service.read.PersonReadServiceProxy;
-import client.service.update.PersonUpdateServiceProxy;
+import client.logic.CommandParser;
+import client.logic.commands.AbsCommand;
 
 public class Main {
 
 	public static void main(String[] args) {
-		int size = 0;
+		
+		CommandParser parser = CommandParser.getParser();
+		
+		while (true) {
+		
+			Scanner in = new Scanner(System.in);   
+	    	String input = in.nextLine();
+	    	
+	    	if (input.equals("/exit")) {
+	    		break;
+	    	}
+	    	
+	    	AbsCommand command = parser.parseMessage(input);
+	    	
+	    	System.out.println(command.executeCommand());
+	    
+		}
+		
+		/*int size = 0;
 	
 		PersonReadServiceProxy readProxy = new PersonReadServiceProxy();
 		try {
@@ -94,7 +109,7 @@ public class Main {
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 }

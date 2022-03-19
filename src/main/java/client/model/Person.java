@@ -38,7 +38,23 @@ public class Person implements java.io.Serializable {
     }
 
 
-    /**
+    public Person(String name, String surname, String patronymic, int age) {
+        this.age = age;
+        this.name = name;
+        this.patronymic = patronymic;
+        this.surname = surname;
+        this.id = 0;
+	}
+
+	public Person(int id, String name, String surname, String patronymic, int age) {
+        this.age = age;
+        this.id = id;
+        this.name = name;
+        this.patronymic = patronymic;
+        this.surname = surname;
+	}
+
+	/**
      * Gets the age value for this Person.
      * 
      * @return age
