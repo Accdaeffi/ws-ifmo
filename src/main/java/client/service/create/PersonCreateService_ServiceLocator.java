@@ -105,7 +105,7 @@ public class PersonCreateService_ServiceLocator extends org.apache.axis.client.S
     }
 
     public javax.xml.namespace.QName getServiceName() {
-        return new javax.xml.namespace.QName("http://soap.services.webservice/", "PersonCreateService");
+		return new javax.xml.namespace.QName("http://create.service.cleint/", "PersonCreateService");
     }
 
     private java.util.HashSet ports = null;
@@ -113,7 +113,7 @@ public class PersonCreateService_ServiceLocator extends org.apache.axis.client.S
     public java.util.Iterator getPorts() {
         if (ports == null) {
             ports = new java.util.HashSet();
-            ports.add(new javax.xml.namespace.QName("http://soap.services.webservice/", "PersonCreateServicePort"));
+            ports.add(new javax.xml.namespace.QName("http://create.service.cleint/", "PersonCreateServicePort"));
         }
         return ports.iterator();
     }
