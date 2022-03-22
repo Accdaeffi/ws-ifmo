@@ -1,10 +1,13 @@
 package webservice.database;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.annotation.Resource;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 public class ConnectionUtils {
@@ -12,8 +15,29 @@ public class ConnectionUtils {
 	private static final String JDBC_USER = "ifmo-ws";
 	private static final String JDBC_PASSWORD = "ifmo-ws";
 
-	@Resource(lookup = "jdbc/ifmo-ws")
-	static DataSource dataSource;
+    @Resource(lookup = "jdbc/ifmo-ws")
+	private DataSource dataSource;
+    
+    static ConnectionUtils instance = null;
+        
+    private ConnectionUtils() {
+    	try {
+    		InitialContext context = new InitialContext();
+    		dataSource = (DataSource) context.lookup("jdbc/ifmo-ws");
+                
+     		Logger.getLogger(ConnectionUtils.class.getName()).log(Level.INFO, dataSource.toString());
+     	} catch (NamingException ex) {
+    	 	Logger.getLogger(ConnectionUtils.class.getName()).log(Level.SEVERE, null, ex);
+     	}
+            
+     }
+        
+     public static ConnectionUtils getConnectionUtils() {
+     	if (instance == null) {
+        	instance = new ConnectionUtils();
+     	}
+     	return instance;
+     }
 	
 	/*public static Connection getConnection() {
 		Connection connection = null;
@@ -28,7 +52,9 @@ public class ConnectionUtils {
 		return connection;
 	 }*/
 	
-	public static Connection getConnection() {
+	public Connection getConnection() {
+                System.out.println(dataSource == null);
+            
 		Connection result = null;
 		
 		try {

@@ -14,7 +14,7 @@ public class UpdateService {
 	private final Connection connection;
 
 	public UpdateService() {
-		connection = ConnectionUtils.getConnection();
+		connection = ConnectionUtils.getConnectionUtils().getConnection();
 	}
 	
 	public UpdateService(DataSource dataSource) throws SQLException {

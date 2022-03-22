@@ -15,7 +15,7 @@ public class CreateService {
 	private final Connection connection;
 
 	public CreateService() {
-		connection = ConnectionUtils.getConnection();
+		connection = ConnectionUtils.getConnectionUtils().getConnection();
 	}
 	
 	public CreateService(DataSource dataSource) throws SQLException {

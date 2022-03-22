@@ -13,7 +13,7 @@ public class DeleteService {
 	private final Connection connection;
 
 	public DeleteService() {
-		connection = ConnectionUtils.getConnection();
+		connection = ConnectionUtils.getConnectionUtils().getConnection();
 	}
 	
 	public DeleteService(DataSource dataSource) throws SQLException {

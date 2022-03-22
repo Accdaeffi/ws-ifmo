@@ -17,7 +17,7 @@ public class ReadService {
 	private final Connection connection;
 
 	public ReadService() {
-		connection = ConnectionUtils.getConnection();
+		connection = ConnectionUtils.getConnectionUtils().getConnection();
 	}
 	
 	public ReadService(DataSource dataSource) throws SQLException {
