@@ -4,10 +4,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import javax.sql.DataSource;
+
 public class ConnectionUtils {
 	private static final String JDBC_URL = "jdbc:postgresql://localhost:5432/ifmo-ws";
 	private static final String JDBC_USER = "ifmo-ws";
 	private static final String JDBC_PASSWORD = "ifmo-ws";
+
+	static DataSource dataSource;
 
 	public static Connection getConnection() {
 		Connection connection = null;
