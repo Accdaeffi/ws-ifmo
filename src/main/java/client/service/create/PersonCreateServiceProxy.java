@@ -1,6 +1,9 @@
 package client.service.create;
 
 public class PersonCreateServiceProxy implements client.service.create.PersonCreateService_PortType {
+
+	public boolean isFree = true;
+	
   private String _endpoint = null;
   private client.service.create.PersonCreateService_PortType personCreateService_PortType = null;
   

@@ -8,6 +8,7 @@ import client.model.Person;
 import client.model.faults.EmptyArgumentFault;
 import client.model.faults.IncorrectArgumentFault;
 import client.model.faults.WorkWithSQLFault;
+import client.service.create.PersonCreateServiceProxiesPool;
 import client.service.create.PersonCreateServiceProxy;
 
 public class CreateByFullNameAndAgeCommand extends AbsCommand {
@@ -33,7 +34,23 @@ public class CreateByFullNameAndAgeCommand extends AbsCommand {
 	public String executeCommand() {
 		StringBuilder sb = new StringBuilder();
 		
-		PersonCreateServiceProxy createProxy = new PersonCreateServiceProxy();
+		PersonCreateServiceProxiesPool pool = PersonCreateServiceProxiesPool.getPool();
+		
+		PersonCreateServiceProxy createProxy = null;
+		
+		while (true) {
+			createProxy = pool.getProxy();
+			if (createProxy != null) {
+				break;
+			} else {
+				try {
+					this.wait(500);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
 		try {
 			Person result = createProxy.createPerson(personToAdd.getName(), 
 					personToAdd.getSurname(), 
@@ -52,6 +69,10 @@ public class CreateByFullNameAndAgeCommand extends AbsCommand {
 		catch (RemoteException e) {
 			e.printStackTrace();
 			sb.append("Ошибка соединения!");
+		}
+		
+		if (!pool.returnProxy(createProxy)) {
+			System.out.println("Ошибка при возврате прокси в пул");
 		}
 		
 		return sb.toString();
