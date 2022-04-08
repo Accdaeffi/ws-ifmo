@@ -44,10 +44,10 @@ public class PersonCreateServiceProxy implements client.service.create.PersonCre
     return personCreateService_PortType;
   }
   
-  public client.model.Person createPerson(java.lang.String arg0, java.lang.String arg1, java.lang.String arg2, int arg3) throws java.rmi.RemoteException, client.model.faults.IncorrectArgumentFault, client.model.faults.WorkWithSQLFault, client.model.faults.EmptyArgumentFault{
+  public client.model.Person createPerson(java.lang.String arg0, java.lang.String arg1, java.lang.String arg2, int arg3, String arg4) throws java.rmi.RemoteException, client.model.faults.IncorrectArgumentFault, client.model.faults.WorkWithSQLFault, client.model.faults.EmptyArgumentFault{
     if (personCreateService_PortType == null)
       _initPersonCreateServiceProxy();
-    return personCreateService_PortType.createPerson(arg0, arg1, arg2, arg3);
+    return personCreateService_PortType.createPerson(arg0, arg1, arg2, arg3, arg4);
   }
   
   

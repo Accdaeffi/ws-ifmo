@@ -14,9 +14,14 @@ import webservice.exceptions.faults.WorkWithSQLFault;
 public class PersonDeleteService {
 
 	@WebMethod(operationName = "deletePerson")
-	public boolean deletePerson(int id) 
+	public boolean deletePerson(int id, String auth) 
 			throws WorkWithSQLException, IncorrectArgumentException {
 		 DeleteService service = new DeleteService();
+		 
+		 if (!auth.equals("Basic bG9naW46cGFzcw==")) {
+			 IncorrectArgumentFault fault = new IncorrectArgumentFault("login and/or password");
+			 throw new IncorrectArgumentException(fault);
+		 }
 		 
 		 if (id < 0) {
 			 IncorrectArgumentFault fault = new IncorrectArgumentFault("id");

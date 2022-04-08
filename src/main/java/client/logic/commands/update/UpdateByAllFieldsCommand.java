@@ -2,6 +2,7 @@ package client.logic.commands.update;
 
 import java.rmi.RemoteException;
 
+import client.logic.BasicAuthStringGenerator;
 import client.logic.commands.AbsCommand;
 import client.logic.exceptions.IncorrectNumberOfArgumentsException;
 import client.model.Person;
@@ -35,7 +36,8 @@ public class UpdateByAllFieldsCommand extends AbsCommand {
 		
 		PersonUpdateServiceProxy updateProxy = new PersonUpdateServiceProxy();
 		try {
-			boolean result = updateProxy.updatePerson(personToUpdate);
+			boolean result = updateProxy.updatePerson(personToUpdate, 
+					BasicAuthStringGenerator.generateString());
 			if (result) {
 				sb.append("Обновлено успешно!");
 			} else {

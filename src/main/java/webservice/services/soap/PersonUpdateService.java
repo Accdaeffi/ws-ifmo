@@ -18,9 +18,14 @@ import webservice.exceptions.faults.WorkWithSQLFault;
 public class PersonUpdateService {
 
 	@WebMethod(operationName = "updatePerson")
-	public boolean updatePerson(Person person) 
+	public boolean updatePerson(Person person, String auth) 
 			throws WorkWithSQLException, IncorrectArgumentException, EmptyArgumentException {
 		 UpdateService service = new UpdateService();
+		 
+		 if (!auth.equals("Basic bG9naW46cGFzcw==")) {
+			 IncorrectArgumentFault fault = new IncorrectArgumentFault("login and/or password");
+			 throw new IncorrectArgumentException(fault);
+		 }
 		 
 		 if (person.getName() == null || person.getName().equals("")) {
 			 EmptyArgumentFault fault = new EmptyArgumentFault("name");

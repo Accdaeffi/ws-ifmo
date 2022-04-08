@@ -2,6 +2,7 @@ package client.logic.commands.delete;
 
 import java.rmi.RemoteException;
 
+import client.logic.BasicAuthStringGenerator;
 import client.logic.commands.AbsCommand;
 import client.logic.exceptions.IncorrectNumberOfArgumentsException;
 import client.model.faults.IncorrectArgumentFault;
@@ -28,7 +29,7 @@ public class DeleteByIdCommand extends AbsCommand {
 		
 		PersonDeleteServiceProxy deleteProxy = new PersonDeleteServiceProxy();
 		try {
-			boolean result = deleteProxy.deletePerson(id);
+			boolean result = deleteProxy.deletePerson(id, BasicAuthStringGenerator.generateString());
 			if (result) {
 				sb.append("Удалено успешно!");
 			} else {

@@ -2,6 +2,7 @@ package client.logic.commands.create;
 
 import java.rmi.RemoteException;
 
+import client.logic.BasicAuthStringGenerator;
 import client.logic.commands.AbsCommand;
 import client.logic.exceptions.IncorrectNumberOfArgumentsException;
 import client.model.Person;
@@ -33,12 +34,15 @@ public class CreateByFullNameAndAgeCommand extends AbsCommand {
 	public String executeCommand() {
 		StringBuilder sb = new StringBuilder();
 		
+		
+		
 		PersonCreateServiceProxy createProxy = new PersonCreateServiceProxy();
 		try {
 			Person result = createProxy.createPerson(personToAdd.getName(), 
 					personToAdd.getSurname(), 
 					personToAdd.getPatronymic(), 
-					personToAdd.getAge());
+					personToAdd.getAge(),
+					BasicAuthStringGenerator.generateString());
 			
 			sb.append(String.format("Успешно добавлено! Id нового объект - %d.", result.getId())); 
 		}

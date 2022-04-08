@@ -16,9 +16,14 @@ import webservice.exceptions.faults.WorkWithSQLFault;
 public class PersonCreateService {
 
 	@WebMethod(operationName = "createPerson")
-	public Person createPerson(String name, String surname, String patronymic, int age) 
+	public Person createPerson(String name, String surname, String patronymic, int age, String auth) 
 			throws IncorrectArgumentException, EmptyArgumentException, WorkWithSQLException {
 		 CreateService service = new CreateService();
+		 
+		 if (!auth.equals("Basic bG9naW46cGFzcw==")) {
+			 IncorrectArgumentFault fault = new IncorrectArgumentFault("login and/or password");
+			 throw new IncorrectArgumentException(fault);
+		 }
 		 
 		 if (age < 0) {
 			 IncorrectArgumentFault fault = new IncorrectArgumentFault("age");

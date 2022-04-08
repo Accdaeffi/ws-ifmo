@@ -28,6 +28,9 @@ public class PersonUpdateServicePortBindingStub extends org.apache.axis.client.S
         param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg0"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://soap.services.webservice/", "person"), client.model.Person.class, false, false);
         param.setOmittable(true);
         oper.addParameter(param);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg1"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
+        param.setOmittable(true);
+        oper.addParameter(param);
         oper.setReturnType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "boolean"));
         oper.setReturnClass(boolean.class);
         oper.setReturnQName(new javax.xml.namespace.QName("", "return"));
@@ -178,7 +181,7 @@ public class PersonUpdateServicePortBindingStub extends org.apache.axis.client.S
         }
     }
 
-    public boolean updatePerson(client.model.Person arg0) throws java.rmi.RemoteException, client.model.faults.IncorrectArgumentFault, client.model.faults.WorkWithSQLFault, client.model.faults.EmptyArgumentFault {
+    public boolean updatePerson(client.model.Person arg0, String arg1) throws java.rmi.RemoteException, client.model.faults.IncorrectArgumentFault, client.model.faults.WorkWithSQLFault, client.model.faults.EmptyArgumentFault {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -194,7 +197,7 @@ public class PersonUpdateServicePortBindingStub extends org.apache.axis.client.S
 
         setRequestHeaders(_call);
         setAttachments(_call);
- try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {arg0});
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {arg0, arg1});
 
         if (_resp instanceof java.rmi.RemoteException) {
             throw (java.rmi.RemoteException)_resp;
